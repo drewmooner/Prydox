@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState, type ReactNode } from "react";
+import { Suspense, useEffect, useState, type ReactNode } from "react";
 import { PRYDOX_P, type PrydoxSupplyAsset } from "@/lib/prydox-tokens";
 import { formatApyPct } from "@/lib/aave-math";
 import { ProtocolAppShell } from "@/components/protocol-app-shell";
@@ -161,7 +161,7 @@ function AmountQuickButtons({
   );
 }
 
-export default function LendPage() {
+function LendPageInner() {
   const searchParams = useSearchParams();
   const [depositAsset, setDepositAsset] = useState<PrydoxSupplyAsset>("USDC");
   const [withdrawAsset, setWithdrawAsset] = useState<PrydoxSupplyAsset>("USDC");
@@ -498,5 +498,21 @@ export default function LendPage() {
         </div>
       </div>
     </ProtocolAppShell>
+  );
+}
+
+export default function LendPage() {
+  return (
+    <Suspense
+      fallback={
+        <ProtocolAppShell title="Lend">
+          <div className="pb-8">
+            <p className="text-[13px] text-[var(--muted)]">Loading…</p>
+          </div>
+        </ProtocolAppShell>
+      }
+    >
+      <LendPageInner />
+    </Suspense>
   );
 }
