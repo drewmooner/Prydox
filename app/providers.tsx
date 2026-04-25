@@ -2,7 +2,6 @@
 
 import "@rainbow-me/rainbowkit/styles.css";
 import { QueryClient, QueryClientProvider, useQueryClient } from "@tanstack/react-query";
-import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { type ReactNode, useState } from "react";
 import { useWatchBlockNumber, WagmiProvider } from "wagmi";
 import { litvmLiteforge } from "@/lib/chain";
@@ -31,7 +30,7 @@ export function Providers({ children }: { children: ReactNode }) {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <BlockSyncBridge />
-        <RainbowKitProvider>{children}</RainbowKitProvider>
+        {children}
       </QueryClientProvider>
     </WagmiProvider>
   );

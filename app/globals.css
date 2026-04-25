@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+/* Document scroll: Chrome pairs overflow-x:hidden with overflow-y:auto on a box, which can trap
+   scroll inside <main> and keep children “pinned” to that scrollport. Keep window scrolling primary. */
+@layer base {
+  html {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  body {
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+  header[data-prydox-site-nav] {
+    position: relative !important;
+    inset: auto !important;
+  }
+}
+
 /* Prydox global theme */
 :root {
   --ltc: #6f737a;

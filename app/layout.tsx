@@ -48,15 +48,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${body.variable} ${display.variable} ${mono.variable} h-full`}
+      className={`${body.variable} ${display.variable} ${mono.variable}`}
     >
       <body
-        className={`${body.className} relative min-h-full bg-[var(--bg)] text-[var(--fg)] antialiased`}
+        className={`${body.className} relative bg-[var(--bg)] text-[var(--fg)] antialiased`}
       >
         <SpaceStarfield />
         <Providers>
-          <div className="relative z-10 flex min-h-full flex-col">
-            <div className="flex-1">{children}</div>
+          <div className="relative z-10">
+            {children}
             <SiteFooter />
           </div>
         </Providers>

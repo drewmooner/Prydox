@@ -65,7 +65,8 @@ export function LandingHeader() {
   return (
     <header
       ref={headerRef}
-      className={`z-30 bg-[#080909]/95 backdrop-blur-xl transition-colors ${
+      data-prydox-site-nav
+      className={`relative z-30 bg-[#080909]/95 backdrop-blur-xl transition-colors ${
         isScrolling && !isAtTop ? "border-b border-white/10" : "border-b border-transparent"
       }`}
     >

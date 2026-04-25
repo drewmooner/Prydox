@@ -24,13 +24,13 @@ const USDC_LOGO =
 
 export default function Home() {
   return (
-    <main
-      className={`${fustat.variable} ${inter.variable} relative min-h-screen overflow-hidden bg-[var(--bg)] text-[#e9f4ee] [font-family:var(--font-inter),Inter,sans-serif] [-webkit-font-smoothing:antialiased]`}
-    >
+    <>
+      <LandingHeader />
+      <main
+        className={`${fustat.variable} ${inter.variable} relative min-h-screen overflow-x-hidden bg-[var(--bg)] text-[#e9f4ee] [font-family:var(--font-inter),Inter,sans-serif] [-webkit-font-smoothing:antialiased]`}
+      >
       <div className="pointer-events-none absolute left-0 top-0 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(46,255,167,0.35),rgba(46,255,167,0)_65%)] blur-[60px]" />
       <div className="pointer-events-none absolute left-[80px] top-[60px] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(0,184,107,0.28),rgba(0,184,107,0)_70%)] blur-[70px]" />
-
-      <LandingHeader />
 
       <div className="relative z-10 mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-10 px-6 pb-16 pt-12 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <section>
@@ -152,5 +152,6 @@ export default function Home() {
         <div id="about" className="h-px scroll-mt-28" />
       </div>
     </main>
+    </>
   );
 }

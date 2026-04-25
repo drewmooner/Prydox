@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLayoutEffect, useRef } from "react";
 import {
   ArrowsLeftRight,
   BookOpenText,
@@ -35,9 +36,18 @@ const protocolLinks = [
 
 export function ProtocolSidebar() {
   const pathname = usePathname();
+  const activeNavRef = useRef<HTMLAnchorElement | null>(null);
 
   const isActive = (href: string) =>
     pathname === href || (href !== "/" && pathname?.startsWith(`${href}/`));
+
+  useLayoutEffect(() => {
+    activeNavRef.current?.scrollIntoView({
+      behavior: "auto",
+      inline: "nearest",
+      block: "center",
+    });
+  }, [pathname]);
 
   return (
     <aside className="protocol-sidebar-scroll hidden h-screen w-64 shrink-0 overflow-y-auto border-r border-white/10 bg-[#101112] md:block">
@@ -66,6 +76,7 @@ export function ProtocolSidebar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  ref={active ? activeNavRef : undefined}
                   className={`flex items-center gap-2 rounded-[10px] px-3 py-2 text-[13px] font-medium transition ${
                     active
                       ? "border border-[#1e7a4f] bg-[rgba(15,154,95,0.18)] text-[#c7f3dd]"
@@ -92,6 +103,7 @@ export function ProtocolSidebar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  ref={active ? activeNavRef : undefined}
                   className={`flex items-center gap-2 rounded-[10px] px-3 py-2 text-[13px] font-medium transition ${
                     active
                       ? "border border-[#1e7a4f] bg-[rgba(15,154,95,0.18)] text-[#c7f3dd]"
@@ -113,16 +125,21 @@ export function ProtocolSidebar() {
           <ul className="mt-2 space-y-1">
             {protocolLinks.map((item) => {
               const Icon = item.icon;
+              const active = isActive(item.href);
               return (
                 <li
                   key={item.label}
                   className={`rounded-[10px] px-3 py-2 text-[12px] transition ${
-                    isActive(item.href)
+                    active
                       ? "border border-[#1e7a4f] bg-[rgba(15,154,95,0.18)] text-[#c7f3dd]"
                       : "text-[#c4c8cf] hover:bg-[#1b1d1f] hover:text-white"
                   }`}
                 >
-                  <Link href={item.href} className="flex items-center gap-2">
+                  <Link
+                    href={item.href}
+                    ref={active ? activeNavRef : undefined}
+                    className="flex items-center gap-2"
+                  >
                     <Icon size={15} />
                     {item.label}
                   </Link>

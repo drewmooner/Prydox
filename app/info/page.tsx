@@ -16,11 +16,11 @@ const inter = Inter({
 
 export default function InfoPage() {
   return (
-    <main
-      className={`${fustat.variable} ${inter.variable} min-h-screen bg-[#040806] text-[#e9f4ee] [font-family:var(--font-inter),Inter,sans-serif]`}
-    >
+    <>
       <LandingHeader />
-
+      <main
+        className={`${fustat.variable} ${inter.variable} min-h-screen bg-[#040806] text-[#e9f4ee] [font-family:var(--font-inter),Inter,sans-serif]`}
+      >
       <div className="mx-auto w-full max-w-[1600px] px-6 pb-16 pt-10 md:px-10">
         <section id="products" className="mb-16 scroll-mt-28">
           <h3 className="text-[36px] leading-[1.08] tracking-[-1px] text-[#effff5] [font-family:var(--font-fustat),Fustat,sans-serif] md:text-[42px]">
@@ -82,5 +82,6 @@ export default function InfoPage() {
         </section>
       </div>
     </main>
+    </>
   );
 }

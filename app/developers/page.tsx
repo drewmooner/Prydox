@@ -3,9 +3,10 @@ import { LandingThemedBackdrop } from "@/components/landing-themed-backdrop";
 
 export default function DevelopersPage() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[var(--bg)] text-[var(--fg)]">
-      <LandingThemedBackdrop />
+    <>
       <LandingHeader />
+      <div className="relative min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--fg)]">
+      <LandingThemedBackdrop />
       <main className="relative z-10 mx-auto max-w-[1100px] px-4 py-14 md:px-8 md:py-16">
         <p className="font-mono-tight text-[11px] uppercase tracking-[0.2em] text-[var(--muted-2)]">
           Developers
@@ -46,5 +47,6 @@ export default function DevelopersPage() {
         </section>
       </main>
     </div>
+    </>
   );
 }

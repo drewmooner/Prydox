@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { usePathname } from "next/navigation";
 import {
   ArrowsClockwise,
@@ -14,6 +20,7 @@ import {
   ChartLineUp,
   Target,
 } from "@phosphor-icons/react";
+import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import { ConnectWallet } from "@/components/connect-wallet";
 import { ProtocolSidebar } from "@/components/protocol-sidebar";
 
@@ -29,8 +36,17 @@ const MOBILE_PROTOCOL_TABS = [
 
 function ProtocolMobileNavTabs() {
   const pathname = usePathname();
+  const activeTabRef = useRef<HTMLAnchorElement | null>(null);
   const isActive = (href: string) =>
     pathname === href || (href !== "/" && pathname?.startsWith(`${href}/`));
+
+  useLayoutEffect(() => {
+    activeTabRef.current?.scrollIntoView({
+      behavior: "auto",
+      inline: "center",
+      block: "nearest",
+    });
+  }, [pathname]);
 
   return (
     <nav
@@ -45,6 +61,7 @@ function ProtocolMobileNavTabs() {
             <Link
               key={item.href}
               href={item.href}
+              ref={active ? activeTabRef : undefined}
               className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-[12px] font-medium transition ${
                 active
                   ? "border-[#1e7a4f] bg-[rgba(15,154,95,0.2)] text-[#c7f3dd]"
@@ -85,14 +102,16 @@ export function ProtocolAppShell({
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#080909] text-[var(--fg)]">
+    <RainbowKitProvider theme={darkTheme()}>
+      <div className="min-h-screen bg-[#080909] text-[var(--fg)]">
       <div className="mx-auto flex max-w-[1540px]">
-        <div className="sticky top-0 h-screen">
+        <div className="shrink-0 md:self-start">
           <ProtocolSidebar />
         </div>
-        <div className="min-w-0 flex-1">
-          <div className="pointer-events-none fixed inset-x-0 bottom-0 h-[35vh] bg-[radial-gradient(90%_80%_at_50%_100%,rgba(90,90,90,0.12),transparent)]" />
-          <header className="z-40 bg-[#080909]/95 backdrop-blur-xl">
+        <div className="relative min-w-0 flex-1">
+          {/* Scrolls with the page (was fixed to viewport, which felt like pinned chrome). */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[35vh] bg-[radial-gradient(90%_80%_at_50%_100%,rgba(90,90,90,0.12),transparent)]" />
+          <header className="relative z-40 bg-[#080909]/95 backdrop-blur-xl">
             <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-4 px-4 md:h-16 md:px-6">
               <div className="flex min-w-0 items-center gap-2">
                 <Link
@@ -185,6 +204,7 @@ export function ProtocolAppShell({
         </div>
       </div>
     </div>
+    </RainbowKitProvider>
   );
 }
 
