@@ -96,6 +96,24 @@ export function ProtocolAppShell({
             <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-4 px-4 md:h-16 md:px-6">
               <div className="flex min-w-0 items-center gap-2">
                 {showMarketsSearch ? (
+                  <Link
+                    href="/"
+                    className="mr-1 flex shrink-0 items-center gap-0 transition-opacity hover:opacity-90 md:hidden"
+                    aria-label="Prydox home"
+                  >
+                    <Image
+                      src="/logo/prydox-logo.png"
+                      alt=""
+                      width={34}
+                      height={34}
+                      className="h-8 w-8 rounded-[7px] object-cover object-left"
+                    />
+                    <span className="-ml-1.5 text-[16px] font-semibold tracking-tight text-[#f1f2f4]">
+                      rydox
+                    </span>
+                  </Link>
+                ) : null}
+                {showMarketsSearch ? (
                   <label className="relative hidden md:block">
                     <MagnifyingGlass
                       size={15}
