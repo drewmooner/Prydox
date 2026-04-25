@@ -13,7 +13,6 @@ function BlockSyncBridge() {
   useWatchBlockNumber({
     chainId: litvmLiteforge.id,
     emitOnBegin: false,
-    poll: false,
     onBlockNumber: () => {
       void queryClient.invalidateQueries({ queryKey: ["pool-reserves"] });
       void queryClient.invalidateQueries({ queryKey: ["borrow-eligibility"] });
