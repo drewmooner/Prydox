@@ -121,8 +121,61 @@ export default function MarketsPage() {
       title="Markets"
       subtitle="Live reserves, APY, and utilization across Prydox."
     >
-      <div className="rounded-[14px] border border-[var(--border)] bg-[var(--bg)] p-4">
-        <div className="overflow-x-auto">
+      <div className="rounded-[14px] border border-[var(--border)] bg-[var(--bg)] p-3 sm:p-4">
+        <div className="space-y-3 md:hidden">
+          {showLoading
+            ? skeletonRows.map((key) => (
+                <div
+                  key={key}
+                  className="animate-pulse rounded-[12px] border border-white/10 bg-[var(--surface2)] p-3"
+                >
+                  <div className="mb-3 h-4 w-24 rounded bg-[var(--surface3)]" />
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="h-4 w-16 rounded bg-[var(--surface3)]" />
+                    <div className="h-4 w-16 rounded bg-[var(--surface3)]" />
+                    <div className="h-4 w-20 rounded bg-[var(--surface3)]" />
+                    <div className="h-4 w-20 rounded bg-[var(--surface3)]" />
+                  </div>
+                </div>
+              ))
+            : rows.map((r) => {
+                const isZkLtc = r.symbol.toUpperCase() === "ZKLTC" || r.symbol.toUpperCase() === "LTC";
+                const assetLabel = isZkLtc ? "zkLTC" : r.symbol;
+                const logoSrc = isZkLtc ? COINGECKO_LTC_LOGO : COINGECKO_USDC_LOGO;
+                const totalSuppliedNum = Number(r.totalSupplied || "0");
+                const totalBorrowedNum = Number(r.totalBorrowedVar || "0");
+                const availableLiquidity = Math.max(totalSuppliedNum - totalBorrowedNum, 0);
+                const availableLiquidityUsd = availableLiquidity * (r.usdPrice || 1);
+                return (
+                  <div
+                    key={`mobile-${r.asset}`}
+                    className="rounded-[12px] border border-white/10 bg-[var(--surface2)] p-3"
+                  >
+                    <div className="mb-3 flex items-center gap-2 text-[14px] font-semibold text-[var(--fg)]">
+                      <Image src={logoSrc} alt={assetLabel} width={20} height={20} className="rounded-full" />
+                      {assetLabel}
+                    </div>
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-[12px]">
+                      <p className="text-[var(--muted)]">Supply APY</p>
+                      <p className="text-right text-[var(--accent-bright)]">
+                        {formatApyPct(Number.isFinite(r.supplyApyPct) ? r.supplyApyPct : 0)}
+                      </p>
+                      <p className="text-[var(--muted)]">Borrow APY</p>
+                      <p className="text-right text-[#d3b88a]">
+                        {formatApyPct(Number.isFinite(r.variableBorrowApyPct) ? r.variableBorrowApyPct : 0)}
+                      </p>
+                      <p className="text-[var(--muted)]">Total Supplied</p>
+                      <p className="text-right text-[#c5ccd5]">{fmt(r.totalSupplied)}</p>
+                      <p className="text-[var(--muted)]">Total Liquidity</p>
+                      <p className="text-right text-[#c5ccd5]">{fmtCompact(availableLiquidityUsd)}</p>
+                      <p className="text-[var(--muted)]">Utilization</p>
+                      <p className="text-right text-[#c5ccd5]">{r.utilizationPct.toFixed(2)}%</p>
+                    </div>
+                  </div>
+                );
+              })}
+        </div>
+        <div className="hidden overflow-x-auto md:block">
           <table className="w-full min-w-[700px] text-left">
             <thead>
               <tr className="border-b border-[var(--border)] text-[11px] uppercase tracking-[0.12em] text-[var(--muted)]">
