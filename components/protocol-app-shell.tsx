@@ -1,11 +1,65 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ArrowsClockwise, MagnifyingGlass } from "@phosphor-icons/react";
+import {
+  ArrowsClockwise,
+  ArrowsLeftRight,
+  Coins,
+  House,
+  Lightning,
+  MagnifyingGlass,
+  ChartLineUp,
+  Target,
+} from "@phosphor-icons/react";
 import { ConnectWallet } from "@/components/connect-wallet";
 import { ProtocolSidebar } from "@/components/protocol-sidebar";
+
+/** Same routes as the desktop sidebar “Markets” + Activities groups (sidebar is hidden below md). */
+const MOBILE_PROTOCOL_TABS = [
+  { href: "/markets", label: "Markets", icon: ChartLineUp },
+  { href: "/positions", label: "Positions", icon: Target },
+  { href: "/borrow", label: "Borrow", icon: Coins },
+  { href: "/lend", label: "Lend", icon: ArrowsLeftRight },
+  { href: "/flash", label: "Flash", icon: Lightning },
+  { href: "/activities", label: "Activity", icon: House },
+] as const;
+
+function ProtocolMobileNavTabs() {
+  const pathname = usePathname();
+  const isActive = (href: string) =>
+    pathname === href || (href !== "/" && pathname?.startsWith(`${href}/`));
+
+  return (
+    <nav
+      aria-label="Protocol pages"
+      className="border-b border-white/10 bg-[#080909]/98 px-4 py-2 md:hidden"
+    >
+      <div className="flex gap-1 overflow-x-auto pb-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        {MOBILE_PROTOCOL_TABS.map((item) => {
+          const Icon = item.icon;
+          const active = isActive(item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-[12px] font-medium transition ${
+                active
+                  ? "border-[#1e7a4f] bg-[rgba(15,154,95,0.2)] text-[#c7f3dd]"
+                  : "border-white/10 bg-[#151617] text-[#bcc1c8] hover:border-white/20 hover:text-white"
+              }`}
+            >
+              <Icon size={14} weight={active ? "fill" : "regular"} />
+              {item.label}
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
 
 export function ProtocolAppShell({
   children,
@@ -96,6 +150,8 @@ export function ProtocolAppShell({
               </div>
             </div>
           </header>
+
+          <ProtocolMobileNavTabs />
 
           <div className="mx-auto max-w-[1400px] px-4 py-6 md:px-6">
             <section>
