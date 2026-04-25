@@ -1,0 +1,15 @@
+{
+  "PoolAddressesProviderRegistry": 1776977648,
+  "LogicLibraries": 1776977700,
+  "Treasury": 1776977725,
+  "PoolAddressesProvider:Prydox:aave-v3-core@1.19.3": 1776977763,
+  "PoolConfigurator": 1776977809,
+  "ACLManager:Prydox:aave-v3-core@1.19.3": 1776977837,
+  "Oracles:Prydox:aave-v3-core@1.19.3": 1776977849,
+  "InitOracles:Prydox:aave-v3-core@1.19.3": 1776977854,
+  "PoolInitalization:Prydox:aave-v3-core@1.19.3": 1776977877,
+  "Incentives:Prydox:aave-v3-periphery@2.5.1": 1776978296,
+  "TokenImplementations:Prydox:aave-v3-core@1.19.3": 1776978362,
+  "ReservesInit:Prydox:aave-v3-core@1.19.3": 1776978416,
+  "PeripheryInit:Prydox:aave-v3-periphery@2.5.1": 1776978416
+}

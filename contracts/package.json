@@ -1,0 +1,44 @@
+{
+  "name": "@prydox/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Prydox protocol — Aave V3 core integration (LitVM deployment targets)",
+  "scripts": {
+    "compile": "hardhat compile",
+    "clean": "hardhat clean",
+    "postinstall": "node scripts/apply-prydox-aave-patches.js",
+    "deploy:local": "cross-env MARKET_NAME=Prydox hardhat deploy --network hardhat",
+    "deploy:litvm": "cross-env MARKET_NAME=Prydox hardhat deploy --network litvmLiteforge",
+    "deploy:litvm:reset": "cross-env MARKET_NAME=Prydox hardhat deploy --network litvmLiteforge --reset",
+    "deploy:litvm-feeds": "hardhat run scripts/deploy-litvm-feeds.js --network litvmLiteforge",
+    "deploy:litvm-faucet": "hardhat run scripts/deploy-prydox-faucet.js --network litvmLiteforge",
+    "deploy:litvm-mint-usdc": "hardhat run scripts/deploy-test-mint-usdc.js --network litvmLiteforge",
+    "fund:litvm-faucet": "node scripts/fund-prydox-faucet.js",
+    "relay:feeds": "node scripts/update-litvm-feeds-from-chainlink.js",
+    "update:litvm-feeds-chainlink": "node scripts/update-litvm-feeds-from-chainlink.js",
+    "test:litvm-oracle": "node scripts/test-litvm-oracle.js"
+  },
+  "dependencies": {
+    "@aave/core-v3": "1.19.3",
+    "@openzeppelin/contracts": "4.9.6"
+  },
+  "devDependencies": {
+    "@aave/deploy-v3": "^1.56.1",
+    "@aave/periphery-v3": "^2.5.1",
+    "@aave/safety-module": "^1.0.3",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "bluebird": "^3.7.2",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "ethers": "^5.7.2",
+    "hardhat": "2.22.18",
+    "hardhat-dependency-compiler": "^1.1.4",
+    "hardhat-deploy": "^0.12.4",
+    "hardhat-deploy-ethers": "^0.3.0-beta.13",
+    "jsondiffpatch": "^0.4.1",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
