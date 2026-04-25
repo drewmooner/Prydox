@@ -13,6 +13,7 @@ export function LandingHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const stopTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const faucetRef = useRef<HTMLDivElement | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -45,8 +46,25 @@ export function LandingHeader() {
     setFaucetOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    function closeIfOutside(e: MouseEvent | TouchEvent) {
+      const root = headerRef.current;
+      if (!root) return;
+      const target = e.target;
+      if (target instanceof Node && !root.contains(target)) setMobileMenuOpen(false);
+    }
+    document.addEventListener("mousedown", closeIfOutside);
+    document.addEventListener("touchstart", closeIfOutside, { passive: true });
+    return () => {
+      document.removeEventListener("mousedown", closeIfOutside);
+      document.removeEventListener("touchstart", closeIfOutside);
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <header
+      ref={headerRef}
       className={`z-30 bg-[#080909]/95 backdrop-blur-xl transition-colors ${
         isScrolling && !isAtTop ? "border-b border-white/10" : "border-b border-transparent"
       }`}
@@ -186,6 +204,26 @@ export function LandingHeader() {
               }`}
             >
               Docs
+            </Link>
+            <Link
+              href="/security"
+              className={`rounded-[8px] px-2.5 py-2 transition-colors ${
+                pathname?.startsWith("/security")
+                  ? "border border-[#1e7a4f] bg-[rgba(15,154,95,0.18)] text-[#c7f3dd]"
+                  : "hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              Security
+            </Link>
+            <Link
+              href="/community"
+              className={`rounded-[8px] px-2.5 py-2 transition-colors ${
+                pathname?.startsWith("/community")
+                  ? "border border-[#1e7a4f] bg-[rgba(15,154,95,0.18)] text-[#c7f3dd]"
+                  : "hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              Community
             </Link>
             <Link
               href="/about"
