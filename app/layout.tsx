@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Manrope, Syne } from "next/font/google";
-import { SpaceStarfield } from "@/components/space-starfield";
 import { SiteFooter } from "@/components/site-footer";
 import { Providers } from "./providers";
 import "./globals.css";
@@ -53,7 +52,6 @@ export default function RootLayout({
       <body
         className={`${body.className} relative bg-[var(--bg)] text-[var(--fg)] antialiased`}
       >
-        <SpaceStarfield />
         <Providers>
           <div className="relative z-10">
             {children}
